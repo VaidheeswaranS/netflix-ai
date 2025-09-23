@@ -2,10 +2,21 @@
 import Header from "./Header";
 import { NETFLIX_BACKGROUND_IMAGE } from "../utils/constants";
 import { validateSignIn, validateSignUp } from "../utils/validate";
+import { auth } from "../utils/firebase";
+import {
+  createUserWithEmailAndPassword,
+  signInWithEmailAndPassword,
+  updateProfile,
+} from "firebase/auth";
+import { useNavigate } from "react-router-dom";
+import { useDispatch } from "react-redux";
+import { addUser } from "../utils/userSlice";
 
 const Login = () => {
   const [isSignInForm, setIsSignInForm] = useState(true);
   const [errorMessage, setErrorMessage] = useState(null);
+  const navigate = useNavigate();
+  const dispatcher = useDispatch();
 
   const handleSignInSignUp = () => {
     setIsSignInForm(!isSignInForm);
@@ -18,20 +29,84 @@ const Login = () => {
 
   const userFormSubmit = () => {
     // form validation happening
+    let message;
     if (isSignInForm) {
-      const message = validateSignIn(
-        email.current.value,
-        password.current.value
-      );
-      setErrorMessage(message);
+      message = validateSignIn(email.current.value, password.current.value);
     } else {
-      const message = validateSignUp(
+      message = validateSignUp(
         email.current.value,
         password.current.value,
         userName.current.value,
         phoneNumber.current.value
       );
-      setErrorMessage(message);
+    }
+    setErrorMessage(message);
+
+    // Only proceed to Authenication if validation is successful
+    if (message != null) return;
+
+    if (!isSignInForm) {
+      // Sign Up happening
+      createUserWithEmailAndPassword(
+        auth,
+        email.current.value,
+        password.current.value
+      )
+        .then((userCredential) => {
+          const user = userCredential.user;
+
+          // updating the user profile with displayName once registered("onAuthStateChanged" in Body.js)
+          updateProfile(user, {
+            displayName: userName.current.value,
+          })
+            .then(() => {
+              const { uid, email, displayName } = user;
+
+              dispatcher(
+                addUser({
+                  uid: uid,
+                  email: email,
+                  displayName: displayName,
+                })
+              );
+              navigate("/browse");
+            })
+            .catch((error) => {
+              const errorCode = error.code;
+              const errorMessage = error.message;
+              setErrorMessage(
+                "Error during user profile update" +
+                  errorCode +
+                  " " +
+                  errorMessage
+              );
+            });
+        })
+        .catch((error) => {
+          const errorCode = error.code;
+          const errorMessage = error.message;
+          setErrorMessage(
+            "Error during sign-up" + errorCode + " " + errorMessage
+          );
+        });
+    } else {
+      // Sign In happening
+      signInWithEmailAndPassword(
+        auth,
+        email.current.value,
+        password.current.value
+      )
+        .then((userCredential) => {
+          const user = userCredential.user;
+          console.log(user); // to be removed later.. added for debugging
+          navigate("/browse");
+        })
+        .catch((error) => {
+          const errorCode = error.code;
+          if (errorCode === "auth/invalid-credential") {
+            setErrorMessage("Email address or Password is wrong. Please check");
+          }
+        });
     }
   };
 
@@ -82,6 +157,11 @@ const Login = () => {
         <button
           className="sign-in-button bg-red-500 rounded-md p-3 mb-3 text-center w-full cursor-pointer"
           onClick={userFormSubmit}
+          onKeyDown={(event) => {
+            if (event.key === "Enter") {
+              userFormSubmit();
+            }
+          }}
         >
           {isSignInForm ? "Sign In" : "Sign Up"}
         </button>
