@@ -8,14 +8,12 @@ import {
   signInWithEmailAndPassword,
   updateProfile,
 } from "firebase/auth";
-import { useNavigate } from "react-router-dom";
 import { useDispatch } from "react-redux";
 import { addUser } from "../utils/userSlice";
 
 const Login = () => {
   const [isSignInForm, setIsSignInForm] = useState(true);
   const [errorMessage, setErrorMessage] = useState(null);
-  const navigate = useNavigate();
   const dispatcher = useDispatch();
 
   const handleSignInSignUp = () => {
@@ -55,7 +53,7 @@ const Login = () => {
         .then((userCredential) => {
           const user = userCredential.user;
 
-          // updating the user profile with displayName once registered("onAuthStateChanged" in Body.js)
+          // updating the user profile with displayName once registered("onAuthStateChanged" in Header.js)
           updateProfile(user, {
             displayName: userName.current.value,
           })
@@ -69,7 +67,6 @@ const Login = () => {
                   displayName: displayName,
                 })
               );
-              navigate("/browse");
             })
             .catch((error) => {
               const errorCode = error.code;
@@ -99,7 +96,6 @@ const Login = () => {
         .then((userCredential) => {
           const user = userCredential.user;
           console.log(user); // to be removed later.. added for debugging
-          navigate("/browse");
         })
         .catch((error) => {
           const errorCode = error.code;

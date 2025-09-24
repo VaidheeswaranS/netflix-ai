@@ -6,3 +6,12 @@ export const NETFLIX_LOGO =
 
 export const NETFLIX_BACKGROUND_IMAGE =
   "https://assets.nflxext.com/ffe/siteui/vlv3/c95abc7a-8124-4630-bb7a-3b160bdc6de3/web/IN-en-20250915-TRIFECTA-perspective_d3d87aa7-58ed-4c6b-98dc-231ed05ba675_large.jpg";
+
+export const API_OPTIONS = {
+  method: "GET",
+  headers: {
+    accept: "application/json",
+    Authorization:
+      "Bearer eyJhbGciOiJIUzI1NiJ9.eyJhdWQiOiJmM2NiOTRjNWFlN2Q5YTU5YjYwYjkyOTEzNGZkY2IyZSIsIm5iZiI6MTc1ODY5MDAzMi4zNDcwMDAxLCJzdWIiOiI2OGQzN2FmMGIyNTk2ZDkwZDYwZTNhNmYiLCJzY29wZXMiOlsiYXBpX3JlYWQiXSwidmVyc2lvbiI6MX0.cjgFFDJnKA7UD4DMWLpupjYI3e500u41whzREVJYxu4",
+  },
+};
