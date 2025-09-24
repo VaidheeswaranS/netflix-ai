@@ -17,12 +17,10 @@ const useMovieTrailer = (movieId) => {
       API_OPTIONS
     );
     const json = await data.json();
-    console.log(json);
     const filteredData = json.results.filter(
       (video) => video.type === "Trailer"
     );
     const trailer = filteredData.length ? filteredData[0] : json.results[0];
-    console.log(trailer);
 
     // adding the trailer video to the redux store
     dispatcher(addTrailerVideo(trailer));

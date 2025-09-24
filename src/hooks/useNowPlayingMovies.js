@@ -16,7 +16,6 @@ const useNowPlayingMovies = () => {
       API_OPTIONS
     );
     const json = await data.json();
-    console.log(json.results);
 
     // updating the Now Playing movies list from TMDB to redux store
     dispatcher(addNowPlayingMovies(json.results));
