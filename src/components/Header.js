@@ -58,7 +58,7 @@ const Header = () => {
           className="text-white bg-red-500 rounded-lg px-2 py-2 cursor-pointer"
           onClick={handleSignOut}
         >
-          Sign out of Netflix
+          Sign out
         </button>
       )}
     </div>
