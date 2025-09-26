@@ -2,8 +2,6 @@
 import MovieCards from "./MovieCards";
 
 const NowPlayingMovieList = ({ title, nowPlayingMovies }) => {
-  console.log(nowPlayingMovies);
-
   return (
     <div className="text-white bg-transparent">
       <h1 className="now-playing-movies-title text-2xl font-bold px-16 py-4">
