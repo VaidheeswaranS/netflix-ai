@@ -17,3 +17,26 @@ export const API_OPTIONS = {
 };
 
 export const MOVIE_POSTER_IMAGE = "https://image.tmdb.org/t/p/w500";
+
+export const SUPPORTED_LANGUAGE = [
+  {
+    identifier: "en",
+    name: "English",
+  },
+  {
+    identifier: "tamil",
+    name: "Tamil",
+  },
+  {
+    identifier: "hindi",
+    name: "Hindi",
+  },
+  {
+    identifier: "spanish",
+    name: "Spanish",
+  },
+  {
+    identifier: "french",
+    name: "French",
+  },
+];

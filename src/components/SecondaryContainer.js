@@ -4,8 +4,10 @@ import { useSelector } from "react-redux";
 import PopularMoviesList from "./PopularMoviesList";
 import TopRatedMoviesList from "./TopRatedMoviesList";
 import UpcomingMoviesList from "./UpcomingMoviesList";
+import languageConstants from "../utils/languageConstants";
 
 const SecondaryContainer = () => {
+  const langKey = useSelector((store) => store.appConfig?.lang);
   const nowPlaying = useSelector((store) => store.movies?.nowPlayingMovies);
   const popular = useSelector((store) => store.movies?.popularMovies);
   const topRated = useSelector((store) => store.movies?.topRatedMovies);
@@ -19,15 +21,24 @@ const SecondaryContainer = () => {
       <div className="main-secondary-container bg-black">
         <div className="mini-secondary-container -mt-[200px] relative z-30">
           <NowPlayingMovieList
-            title={"Now Playing"}
+            title={languageConstants[langKey].nowPlaying}
             nowPlayingMovies={nowPlaying}
           />
 
-          <PopularMoviesList title={"Popular"} popularMovies={popular} />
+          <PopularMoviesList
+            title={languageConstants[langKey].popular}
+            popularMovies={popular}
+          />
 
-          <TopRatedMoviesList title={"Top Rated"} topRatedMovies={topRated} />
+          <TopRatedMoviesList
+            title={languageConstants[langKey].topRated}
+            topRatedMovies={topRated}
+          />
 
-          <UpcomingMoviesList title={"Upcoming"} upcomingMovies={upcoming} />
+          <UpcomingMoviesList
+            title={languageConstants[langKey].upcoming}
+            upcomingMovies={upcoming}
+          />
         </div>
       </div>
     )

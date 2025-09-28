@@ -1,6 +1,10 @@
 ﻿import React from "react";
+import { useSelector } from "react-redux";
+import languageConstants from "../utils/languageConstants";
 
 const MainVideoTitle = ({ title, overview }) => {
+  const langKey = useSelector((store) => store.appConfig?.lang);
+
   return (
     <div className="video-title-main-div w-screen aspect-video pt-60 px-16 absolute text-white bg-gradient-to-r from-black">
       <h1 className="movie-title text-5xl font-bold w-1/3 mb-4">{title}</h1>
@@ -9,10 +13,10 @@ const MainVideoTitle = ({ title, overview }) => {
       </p>
       <div>
         <button className="play-button bg-white text-black hover:opacity-80 rounded-lg px-5 py-1 mr-2">
-          ▶ Play
+          ▶ {languageConstants[langKey].play}
         </button>
         <button className="more-info-button bg-gray-600 hover:opacity-50 text-white font-semibold rounded-lg px-7 py-1">
-          More Info
+          {languageConstants[langKey].moreInfo}
         </button>
       </div>
     </div>

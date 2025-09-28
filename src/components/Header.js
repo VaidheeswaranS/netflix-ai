@@ -1,15 +1,18 @@
 ﻿import React, { useEffect } from "react";
-import { NETFLIX_LOGO } from "../utils/constants";
+import { NETFLIX_LOGO, SUPPORTED_LANGUAGE } from "../utils/constants";
 import { useNavigate } from "react-router-dom";
 import { signOut, onAuthStateChanged } from "firebase/auth";
 import { auth } from "../utils/firebase";
 import { useDispatch, useSelector } from "react-redux";
 import { addUser, removeUser } from "../utils/userSlice";
 import { showGptToggleView } from "../utils/gptSlice";
+import { changeLanguage } from "../utils/appConfigSlice";
+import languageConstants from "../utils/languageConstants";
 
 const Header = () => {
   const navigate = useNavigate();
   const dispatcher = useDispatch();
+  const langKey = useSelector((store) => store.appConfig?.lang);
 
   const user = useSelector((store) => store.user);
 
@@ -52,8 +55,15 @@ const Header = () => {
     dispatcher(showGptToggleView());
   };
 
+  const handleLanguageChange = (event) => {
+    // updating the language settings in the redux store
+    dispatcher(changeLanguage(event.target.value));
+  };
+
   const gptSearch = useSelector((store) => store.gpt?.gptSearchView);
-  const gptSearchTextValue = gptSearch ? "Normal Browse" : "GPT Search";
+  const gptSearchTextValue = gptSearch
+    ? languageConstants[langKey].normalBrowse
+    : languageConstants[langKey].gptSearch;
 
   return (
     <div className="main-header absolute w-screen px-8 py-2 bg-gradient-to-b from-black z-10 flex flex-row justify-between items-center">
@@ -62,6 +72,16 @@ const Header = () => {
         src={NETFLIX_LOGO}
         alt="netflix-logo"
       />
+      <select
+        className="mr-5 bg-purple-300 px-3 py-2 rounded-lg"
+        onChange={handleLanguageChange}
+      >
+        {SUPPORTED_LANGUAGE.map((lang) => (
+          <option key={lang.identifier} value={lang.identifier}>
+            {lang.name}
+          </option>
+        ))}
+      </select>
       {user && (
         <div>
           <button
@@ -74,7 +94,7 @@ const Header = () => {
             className="text-white bg-red-500 rounded-lg px-2 py-2 cursor-pointer"
             onClick={handleSignOut}
           >
-            Sign out
+            {languageConstants[langKey].signOut}
           </button>
         </div>
       )}
