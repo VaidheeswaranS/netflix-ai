@@ -5,7 +5,7 @@ import { signOut, onAuthStateChanged } from "firebase/auth";
 import { auth } from "../utils/firebase";
 import { useDispatch, useSelector } from "react-redux";
 import { addUser, removeUser } from "../utils/userSlice";
-import { showGptToggleView } from "../utils/gptSlice";
+import { removeGptSuggestedMovies, showGptToggleView } from "../utils/gptSlice";
 import { changeLanguage } from "../utils/appConfigSlice";
 import languageConstants from "../utils/languageConstants";
 
@@ -64,6 +64,11 @@ const Header = () => {
   const gptSearchTextValue = gptSearch
     ? languageConstants[langKey].normalBrowse
     : languageConstants[langKey].gptSearch;
+
+  // // Un-comment this if we want to clear the redux store when we do normal browse
+  //   if (gptSearchTextValue === languageConstants[langKey].normalBrowse) {
+  //   dispatcher(removeGptSuggestedMovies());
+  // }
 
   return (
     <div className="main-header absolute w-screen px-8 py-2 bg-gradient-to-b from-black z-10 flex flex-row justify-between items-center">
