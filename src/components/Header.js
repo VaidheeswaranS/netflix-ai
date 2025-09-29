@@ -5,7 +5,7 @@ import { signOut, onAuthStateChanged } from "firebase/auth";
 import { auth } from "../utils/firebase";
 import { useDispatch, useSelector } from "react-redux";
 import { addUser, removeUser } from "../utils/userSlice";
-import { removeGptSuggestedMovies, showGptToggleView } from "../utils/gptSlice";
+import { showGptToggleView } from "../utils/gptSlice";
 import { changeLanguage } from "../utils/appConfigSlice";
 import languageConstants from "../utils/languageConstants";
 

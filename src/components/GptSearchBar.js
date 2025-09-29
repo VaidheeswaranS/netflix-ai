@@ -45,7 +45,6 @@ const GptSearchBar = () => {
 
     const gptSuggestedMovies =
       gptResponse.choices[0]?.message?.content.split(",");
-    console.log(gptSuggestedMovies);
 
     // tmdbMovieSearch is a async function so it will return Promises, since we are requesting 5 movies we will get 5 promises in array
     const promiseArray = gptSuggestedMovies.map((movie) =>
@@ -54,7 +53,6 @@ const GptSearchBar = () => {
 
     const gptMovieResults = await Promise.all(promiseArray);
 
-    console.log(gptMovieResults);
     // adding the GPT suggested movie names and movie results to the redux store
     dispatcher(
       addGptSuggestedMovies({
