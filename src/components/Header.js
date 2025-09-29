@@ -73,7 +73,7 @@ const Header = () => {
         alt="netflix-logo"
       />
       <select
-        className="ml-[880px] mr-5 bg-purple-300 px-3 py-2 rounded-lg"
+        className="ml-[840px] mr-5 bg-purple-300 px-3 py-2 rounded-lg"
         onChange={handleLanguageChange}
       >
         {SUPPORTED_LANGUAGE.map((lang) => (
