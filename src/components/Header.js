@@ -71,6 +71,11 @@ const Header = () => {
     return () => unsubscribe();
   }, []);
 
+  // Show GPT button only on "/" and "/browse" routes, hide on movie details page
+  const showGptButton =
+    // location.pathname === "/" || location.pathname.startsWith("/browse");
+    location.pathname === "/" || location.pathname === "/browse";
+
   const handleGptSearchClick = () => {
     // updating the GPT Search value to either true or false in redux store
     dispatcher(showGptToggleView());
@@ -102,12 +107,14 @@ const Header = () => {
       </select>
       {user && (
         <div>
-          <button
-            className="text-white bg-orange-600 rounded-lg px-2 py-2 mr-6 cursor-pointer"
-            onClick={handleGptSearchClick}
-          >
-            {gptSearchTextValue}
-          </button>
+          {showGptButton && (
+            <button
+              className="text-white bg-orange-600 rounded-lg px-2 py-2 mr-6 cursor-pointer"
+              onClick={handleGptSearchClick}
+            >
+              {gptSearchTextValue}
+            </button>
+          )}
           <button
             className="text-white bg-red-500 rounded-lg px-2 py-2 cursor-pointer"
             onClick={handleSignOut}
