@@ -73,7 +73,6 @@ const Header = () => {
 
   // Show GPT button only on "/" and "/browse" routes, hide on movie details page
   const showGptButton =
-    // location.pathname === "/" || location.pathname.startsWith("/browse");
     location.pathname === "/" || location.pathname === "/browse";
 
   const handleGptSearchClick = () => {
