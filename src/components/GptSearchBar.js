@@ -3,7 +3,7 @@ import { useDispatch, useSelector } from "react-redux";
 import languageConstants from "../utils/languageConstants";
 import openai from "../utils/openai";
 import { API_OPTIONS } from "../utils/constants";
-import { addGptSuggestedMovies } from "../utils/gptSlice";
+import { addGptSuggestedMovies, setGptLoading } from "../utils/gptSlice";
 
 const GptSearchBar = () => {
   const dispatcher = useDispatch();
@@ -26,6 +26,7 @@ const GptSearchBar = () => {
 
   const handleGptSearch = async () => {
     console.log(searchText.current.value);
+    dispatcher(setGptLoading(true));
 
     const gptQuery =
       "Act as a Movie Recommendation system and suggest some movies for the query : " +
@@ -40,6 +41,7 @@ const GptSearchBar = () => {
 
     if (!gptResponse.choices) {
       console.log("Movies not found");
+      dispatcher(setGptLoading(false));
       return;
     }
 
@@ -60,6 +62,7 @@ const GptSearchBar = () => {
         movieResults: gptMovieResults,
       })
     );
+    // addGptSuggestedMovies reducer will set isLoading to false
   };
 
   return (
