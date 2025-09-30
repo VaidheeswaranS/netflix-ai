@@ -5,7 +5,7 @@ import { signOut, onAuthStateChanged } from "firebase/auth";
 import { auth } from "../utils/firebase";
 import { useDispatch, useSelector } from "react-redux";
 import { addUser, removeUser } from "../utils/userSlice";
-import { showGptToggleView } from "../utils/gptSlice";
+import { removeGptSuggestedMovies, showGptToggleView } from "../utils/gptSlice";
 import { changeLanguage } from "../utils/appConfigSlice";
 import languageConstants from "../utils/languageConstants";
 
@@ -39,6 +39,9 @@ const Header = () => {
 
     // changing the GPT view to false as default when user signs out
     if (gptSearch === true) dispatcher(showGptToggleView());
+
+    // removing the GPT suggested movies when user signs out (comment this to preserve GPT suggestedmovies for user)
+    dispatcher(removeGptSuggestedMovies());
   };
 
   useEffect(() => {
