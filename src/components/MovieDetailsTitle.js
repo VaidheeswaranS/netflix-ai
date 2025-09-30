@@ -7,8 +7,6 @@ const MovieDetailsTitle = ({ movieId }) => {
 
   const movieDetails = useSelector((store) => store.movies?.movieDetails);
 
-  console.log(movieDetails);
-
   return (
     movieDetails && (
       <div>

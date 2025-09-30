@@ -1,6 +1,6 @@
 ﻿import React, { useEffect } from "react";
 import { NETFLIX_LOGO, SUPPORTED_LANGUAGE } from "../utils/constants";
-import { useNavigate, useLocation } from "react-router-dom";
+import { useNavigate, useLocation, Link } from "react-router-dom";
 import { signOut, onAuthStateChanged } from "firebase/auth";
 import { auth } from "../utils/firebase";
 import { useDispatch, useSelector } from "react-redux";
@@ -80,11 +80,13 @@ const Header = () => {
 
   return (
     <div className="main-header absolute w-screen px-8 py-2 bg-gradient-to-b from-black z-10 flex flex-row justify-between items-center">
-      <img
-        className="app-logo w-56 bg-transparent object-cover"
-        src={NETFLIX_LOGO}
-        alt="netflix-logo"
-      />
+      <Link to="/">
+        <img
+          className="app-logo w-56 bg-transparent object-cover"
+          src={NETFLIX_LOGO}
+          alt="netflix-logo"
+        />
+      </Link>
       <select
         className="ml-[840px] mr-5 bg-purple-300 px-3 py-2 rounded-lg"
         onChange={handleLanguageChange}
