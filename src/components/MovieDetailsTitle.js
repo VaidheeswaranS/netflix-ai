@@ -29,15 +29,6 @@ const MovieDetailsTitle = ({ movieId }) => {
           <p className="release-date py-2 text-lg w-2/4 leading-tight mb-6">
             Released: {movieDetails?.release_date}
           </p>
-
-          {/* <div>
-          <button className="play-button bg-white text-black hover:opacity-80 rounded-lg px-5 py-1 mr-2">
-            ▶ {languageConstants[langKey].play}
-          </button>
-          <button className="more-info-button bg-gray-600 hover:opacity-50 text-white font-semibold rounded-lg px-7 py-1">
-            {languageConstants[langKey].moreInfo}
-          </button>
-        </div> */}
         </div>
       </div>
     )
