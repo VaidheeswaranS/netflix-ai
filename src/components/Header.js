@@ -1,6 +1,6 @@
 ﻿import React, { useEffect } from "react";
 import { NETFLIX_LOGO, SUPPORTED_LANGUAGE } from "../utils/constants";
-import { useNavigate } from "react-router-dom";
+import { useNavigate, useLocation } from "react-router-dom";
 import { signOut, onAuthStateChanged } from "firebase/auth";
 import { auth } from "../utils/firebase";
 import { useDispatch, useSelector } from "react-redux";
@@ -11,6 +11,7 @@ import languageConstants from "../utils/languageConstants";
 
 const Header = () => {
   const navigate = useNavigate();
+  const location = useLocation();
   const dispatcher = useDispatch();
   const langKey = useSelector((store) => store.appConfig?.lang);
 
@@ -52,7 +53,10 @@ const Header = () => {
             displayName: displayName,
           })
         );
-        navigate("/browse");
+        // Only redirect to browse if coming from root/login, don't override deep links
+        if (location.pathname === "/" || location.pathname === "/login") {
+          navigate("/browse", { replace: true });
+        }
       } else {
         // will be called when user sign-out
         dispatcher(removeUser());

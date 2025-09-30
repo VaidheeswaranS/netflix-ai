@@ -8,6 +8,8 @@ import useTopRatedMovies from "../hooks/useTopRatedMovies";
 import useUpcomingMovies from "../hooks/useUpcomingMovies";
 import { useSelector } from "react-redux";
 import GptSearch from "./GptSearch";
+import { useDispatch } from "react-redux";
+import { clearMovieDetails } from "../utils/moviesSlice";
 
 const Browse = () => {
   useNowPlayingMovies();
@@ -16,6 +18,11 @@ const Browse = () => {
   useUpcomingMovies();
 
   const showGptSearch = useSelector((store) => store.gpt?.gptSearchView);
+  const dispatcher = useDispatch();
+  const movieDetails = useSelector((store) => store.movies?.movieDetails);
+
+  // clearing the movie details from redux store when page mounts
+  if (movieDetails) dispatcher(clearMovieDetails());
 
   return (
     <div>

@@ -10,7 +10,11 @@ const PopularMoviesList = ({ title, popularMovies }) => {
       <div className="overflow-hidden px-16">
         <div className="popular-movies-container flex overflow-x-auto scrollbar-hide">
           {popularMovies.map((movie) => (
-            <MovieCards key={movie.id} poster={movie.poster_path} />
+            <MovieCards
+              key={movie.id}
+              movieId={movie.id}
+              poster={movie.poster_path}
+            />
           ))}
         </div>
       </div>
